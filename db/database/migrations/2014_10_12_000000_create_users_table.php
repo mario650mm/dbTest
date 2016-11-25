@@ -15,7 +15,6 @@ class CreateUsersTable extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
-            $db = \DB::connection('remote')->getDatabaseName();
             $table->increments('id');
             $table->string('name');
             $table->string('email')->unique();
@@ -24,7 +23,7 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->timestamps();
             $table->foreign('proveedor_id')->references('id')
-                ->on(new Expression($db.'.proveedores'))->onUpdate('cascade')->onDelete('cascade');
+                ->on(new Expression('db1.proveedores'))->onUpdate('cascade')->onDelete('cascade');
         });
 
         $now = \Carbon\Carbon::now();
